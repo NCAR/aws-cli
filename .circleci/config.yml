@@ -20,8 +20,8 @@ jobs:
                   exit 1
               fi
               docker tag ncar/aws-cli:latest ncar/aws-cli:${version}
-              docker login --username ${DOCKERHUB_USERNAME} --passwork ${DOCKERHUB_PASSWORD}
-              docker push
+              docker login --username ${DOCKERHUB_USERNAME} --password ${DOCKERHUB_PASSWORD}
+              docker push ncar/aws-cli
 
 workflows:
     version: 2

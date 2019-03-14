@@ -13,13 +13,14 @@ jobs:
           name: Build
           command: |
               docker build -t ncar/aws-cli:latest .
-              verstr=`docker --rm ncar/aws-cli --version`
+              verstr=`docker run --rm ncar/aws-cli --version`
               version=`expr "${verstr}" : 'aws-cli/\([^ ]*\) .*'`
               if [ ":${version}" = ":" \ ; then
                   echo "Unable to determine version!"
                   exit 1
               fi
               docker tag ncar/aws-cli:latest ncar/aws-cli:${version}
+              docker login --username ${DOCKERHUB_USERNAME} --passwork ${DOCKERHUB_PASSWORD}
               docker push
 
 workflows:
@@ -27,7 +28,8 @@ workflows:
 
     update:
         jobs:
-            - build
+            - build:
+                context: sweg
 
     weekly:
         triggers:
@@ -38,7 +40,8 @@ workflows:
                         only:
                             - master
         jobs:
-            - build
+            - build:
+                context: sweg
 
 
 

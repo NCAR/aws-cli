@@ -15,10 +15,11 @@ jobs:
               docker build -t ncar/aws-cli:latest .
               verstr=`docker run --rm ncar/aws-cli --version`
               version=`expr "${verstr}" : 'aws-cli/\([^ ]*\) .*'`
-              if [ ":${version}" = ":" \ ; then
+              if [ ":${version}" = ":" ] ; then
                   echo "Unable to determine version!"
                   exit 1
               fi
+              echo version=${version}
               docker tag ncar/aws-cli:latest ncar/aws-cli:${version}
               docker login --username ${DOCKERHUB_USERNAME} --password ${DOCKERHUB_PASSWORD}
               docker push ncar/aws-cli

@@ -12,6 +12,7 @@ jobs:
       - run:
           name: Build
           command: |
+              set -vxe
               docker build -t ncar/aws-cli:latest .
               verstr=`docker run --rm ncar/aws-cli --version`
               version=`expr "${verstr}" : 'aws-cli/\([^ ]*\) .*'`

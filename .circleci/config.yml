@@ -1,0 +1,44 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7.2-cli
+
+  steps:
+    - checkout
+
+    - setup_remote_docker
+
+    - run:
+        name: "Build"
+        command: |
+            docker build -t ncar/aws-cli:latest .
+            verstr=`docker --rm ncar/aws-cli --version`
+            version=`expr "${verstr}" : 'aws-cli/\([^ ]*\) .*'`
+            if [ ":${version}" = ":" \ ; then
+                echo "Unable to determine version!"
+                exit 1
+            fi
+            docker tag ncar/aws-cli:latest ncar/aws-cli:${version}
+            docker push
+
+workflows:
+   version: 2
+
+   update:
+     jobs:
+       - build
+
+   weekly:
+     triggers:
+       - schedule:
+           cron: "0 0 * * 0"
+           filters:
+             branches:
+               only:
+                 - master
+     jobs:
+       - build
+
+
+

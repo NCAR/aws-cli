@@ -6,5 +6,7 @@ RUN apk -v --update add \
         less && \
     pip install awscli --upgrade && \
     apk -v --purge del py-pip && \
-    rm /var/cache/apk/*
+    rm /var/cache/apk/* && \
+    mkdir $HOME/.aws
+
 ENTRYPOINT ["aws"]

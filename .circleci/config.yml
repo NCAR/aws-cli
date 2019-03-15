@@ -22,7 +22,7 @@ jobs:
               fi
               echo version=${version}
               docker tag ncar/aws-cli:latest ncar/aws-cli:${version}
-              docker login --username ${DOCKERHUB_USERNAME} --password ${DOCKERHUB_PASSWORD}
+              printenv DOCKERHUB_PASSWORD | docker login --username ${DOCKERHUB_USERNAME} --password-stdin
               docker push ncar/aws-cli
 
 workflows:

@@ -1,4 +1,7 @@
 FROM alpine:latest
+
+ENV HOME=/home \
+    WORKDIR=/home/workdir
 RUN apk -v --update add \
         python \
         py-pip \
@@ -7,6 +10,10 @@ RUN apk -v --update add \
     pip install awscli --upgrade && \
     apk -v --purge del py-pip && \
     rm /var/cache/apk/* && \
-    mkdir $HOME/.aws
+    mkdir -p $WORKDIR $HOME/.aws
+
+#    chmod -R 777 $HOME
+
+WORKDIR $WORKDIR
 
 ENTRYPOINT ["aws"]

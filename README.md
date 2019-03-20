@@ -24,3 +24,10 @@ docker using sudo if you don't have permission to run it directly. To pull it fr
 any other files, you can use the following command:
 
     wget https://raw.githubusercontent.com/NCAR/aws-cli/master/aws.sh
+
+You can rename the file and add execute permissions to make it act like the
+real thing:
+
+    mv aws.sh aws
+    chmod +x aws
+

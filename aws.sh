@@ -24,8 +24,7 @@ case $s in
         DOCKER="docker" ;;
 esac
 
-set ${AWS_CLI_IMAGE}
- #"$@"
+set ${AWS_CLI_IMAGE} "$@"
 if [ -d $HOME/.aws ] ; then
     set : --volume=$HOME/.aws:/home/.aws "$@"
     shift
@@ -37,5 +36,6 @@ for var in ${AWS_ENV_VARS} ; do
         shift
     fi
 done
-${DOCKER} run -u $uid:$gid --rm -it --volume=`pwd`:/home/workdir --entrypoint=/bin/sh "$@"
+${DOCKER} run -u $uid:$gid --rm -it --volume=`pwd`:/home/workdir "$@" |
+  tr -d '\r'
 

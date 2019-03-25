@@ -10,10 +10,10 @@ RUN apk -v --update add \
     pip install awscli --upgrade && \
     apk -v --purge del py-pip && \
     rm /var/cache/apk/* && \
-    mkdir -p $WORKDIR $HOME/.aws
+    mkdir -p $WORKDIR $HOME/.awsy
 
-#    chmod -R 777 $HOME
+COPY aws.sh entrypoint.sh /usr/local/bin/
 
 WORKDIR $WORKDIR
 
-ENTRYPOINT ["aws"]
+ENTRYPOINT ["entrypoint.sh"]

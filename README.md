@@ -24,6 +24,6 @@ docker using sudo if you don't have permission to run it directly.
 
 The `ncar/aws-cli` image itself can install the `aws.sh` for you. Just run the following:
 
-    docker run --rm ncar/aws-cli --install-rc=<dir> | sh
+    docker run --rm ncar/aws-cli --init-rc=<dir> | sh
     
 where `<dir>` is a writable local directory in your PATH.

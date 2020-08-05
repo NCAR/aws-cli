@@ -1,18 +1,22 @@
-FROM alpine:latest
+FROM debian:buster-slim
 
 ENV HOME=/home \
     WORKDIR=/home/workdir
-RUN apk -v --update add \
-        python \
-        py-pip \
-        groff \
-        less && \
-    pip install awscli --upgrade && \
-    apk -v --purge del py-pip && \
-    rm /var/cache/apk/* && \
-    mkdir -p $WORKDIR $HOME/.awsy
-
-COPY aws.sh entrypoint.sh /usr/local/bin/
+RUN cd /etc/dpkg/dpkg.cfg.d ; \
+    sed -e 's:path-exclude /usr/share/groff:#&:' docker >docker.t ; \
+    mv docker.t docker ; \
+    cd ; \
+    apt-get update -y && \
+    apt-get install -y \
+     curl \
+     unzip \
+     groff \
+     less -y && \
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" ; \
+    unzip awscliv2.zip ; \
+    ./aws/install ; \
+    mkdir -p $WORKDIR $HOME/.aws
+COPY entrypoint.sh /usr/local/bin
 
 WORKDIR $WORKDIR
 

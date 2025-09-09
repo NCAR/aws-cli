@@ -10,7 +10,5 @@ case $1 in
         echo "EOF"
         echo "chmod +x aws )" ;;
     *)
-        exec ./aws "$@" ;;
+        exec aws "$@" ;;
 esac
-
-

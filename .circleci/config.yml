@@ -13,7 +13,7 @@ jobs:
           name: Build
           command: |
               set -vxe
-              docker build--progress plain  -t ncar/aws-cli:latest .
+              docker build --progress plain -t ncar/aws-cli:latest .
               verstr=`docker run --rm ncar/aws-cli --version 2>&1`
               version=`expr "${verstr}" : 'aws-cli/\([^ ]*\) .*'`
               if [ ":${version}" = ":" ] ; then

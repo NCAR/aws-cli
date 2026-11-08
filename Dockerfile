@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM debian:trixie-slim
 
 ENV HOME=/home \
     WORKDIR=/home/workdir
